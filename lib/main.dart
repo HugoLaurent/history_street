@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 5),
                 Row(
                   children: [
                     Expanded(
@@ -70,7 +70,15 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                     ),
+                    TextButton(
+                        onPressed: () {},
+                        child: const Icon(Icons.camera_alt_outlined)),
                   ],
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Popular Places',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
