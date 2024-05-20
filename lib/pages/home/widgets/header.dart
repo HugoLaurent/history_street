@@ -5,7 +5,8 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.all(15),
       height: 50,
       child: Row(
         children: [
