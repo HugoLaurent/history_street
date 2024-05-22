@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:history_street/pages/profile/profile.dart';
 import 'package:history_street/pages/bookmark/bookmark.dart';
-import 'package:history_street/pages/camera/camera.dart';
-import 'package:history_street/pages/home/home.dart'; // Importez votre page d'accueil existante ici
+import 'package:history_street/pages/score/score.dart';
+import 'package:history_street/pages/home/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,7 +41,7 @@ class MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const Home(),
-    const Camera(),
+    const Score(),
     const BookMark(),
     const Profile(),
   ];
@@ -50,36 +52,68 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _onCameraPressed() async {
+    final imagePicker = ImagePicker();
+    final pickedImage = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.rear,
+      maxWidth: 600,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.camera),
-            label: 'Camera',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Marked',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF242451),
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () => _onItemTapped(0),
+              color:
+                  _selectedIndex == 0 ? const Color(0xFF242451) : Colors.grey,
+            ),
+            IconButton(
+              icon: const Icon(Icons.leaderboard),
+              onPressed: () => _onItemTapped(1),
+              color:
+                  _selectedIndex == 1 ? const Color(0xFF242451) : Colors.grey,
+            ),
+            const SizedBox(width: 48), // Espace pour le FloatingActionButton
+            IconButton(
+              icon: const Icon(Icons.bookmark),
+              onPressed: () => _onItemTapped(2),
+              color:
+                  _selectedIndex == 2 ? const Color(0xFF242451) : Colors.grey,
+            ),
+            IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () => _onItemTapped(3),
+              color:
+                  _selectedIndex == 3 ? const Color(0xFF242451) : Colors.grey,
+            ),
+          ],
+        ),
       ),
+      floatingActionButton: Container(
+        margin: const EdgeInsets.only(top: 40),
+        child: FloatingActionButton(
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(1)),
+          ),
+          onPressed: () {
+            _onCameraPressed();
+          },
+          child: const Icon(Icons.camera_alt),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

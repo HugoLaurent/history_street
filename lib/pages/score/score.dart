@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Camera extends StatelessWidget {
-  const Camera({super.key});
+class Score extends StatelessWidget {
+  const Score({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Camera'),
+      child: Text('Score'),
     );
   }
 }
